@@ -1,0 +1,58 @@
+mysql:
+  host: "localhost"
+  database: "minecraft_plugins"
+  user: "root"
+  password: ""
+
+messages:
+  kick-player-message:
+    - '&c&lTHE LEGION'
+    - ' '
+    - '&cVocê foi expulso do servidor.'
+    - '&cMotivo: &f%reason% &7| &cAutor: &f%author%'
+    - '&cAplicado em: &f%appliedAt%'
+    - ' '
+  kick-message:
+    - '&c%player% foi expulso por %author%'
+    - '&cMotivo: %reason%'
+  ban-player-message:
+    - '&c&lTHE LEGION'
+    - ' '
+    - '&cVocê foi banido permanentemente do servidor.'
+    - '&cMotivo: &f%reason% &7| &cAutor: &f%author%'
+    - '&cAplicado em: &f%appliedAt%'
+    - ' '
+  ban-message:
+    - '&c%player% foi banido por %author%'
+    - '&cMotivo: %reason%'
+  tempban-player-message:
+    - '&c&lTHE LEGION'
+    - ' '
+    - '&cVocê foi banido do servidor.'
+    - '&cMotivo: &f%reason% &7| &cAutor: &f%author%'
+    - '&cAplicado em: &f%appliedAt%'
+    - '&cExpira em: &f%expiresAt%'
+    - ' '
+  tempban-message:
+    - '&c%player% foi banido por %author%'
+    - '&cMotivo: %reason%'
+    - '&cExpira em: %expiresAt%'
+  tempmute-player-message:
+    - ' '
+    - ' &cVocê foi temporariamente silenciado do servidor.'
+    - ' &cMotivo: &f%reason% &7| &cAutor: &f%author%'
+    - ' &cAplicado em: &f%appliedAt%'
+    - ' &cExpira em: &f%expiresAt%'
+    - ' '
+  tempmute-message:
+    - '&c%player% foi temporariamente silenciado por %author%'
+    - '&cMotivo: %reason%'
+    - '&cExpira em: %expiresAt%'
+  unban-message:
+    - '&c%player% foi desbanido por %author%'
+  unmute-message:
+    - '&c%player% foi dessilenciado por %author%'
+
+mute-blocked-commands:
+  - 'g'
+  - 'tell'
