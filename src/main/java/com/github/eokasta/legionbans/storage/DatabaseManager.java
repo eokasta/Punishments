@@ -12,19 +12,21 @@ import java.util.List;
 
 public class DatabaseManager extends com.github.aldevteam.core.storage.sql.DatabaseManager {
 
-    private static final String PUNISHMENTS_TABLE = "punishments";
+    private final String punishmentTable;
 
     private final LegionBansPlugin plugin;
 
     public DatabaseManager(LegionBansPlugin plugin) {
         super(plugin);
         this.plugin = plugin;
+
+        this.punishmentTable = plugin.getSettings().getSQLSettings().getString("table");
     }
 
     public void insertPunishment(Punishment punishment) {
         try (final PreparedStatement statement = plugin.getDatabaseManager().getSql()
                 .prepareStatement(String.format("INSERT INTO %s (player, json) VALUES (?,?)",
-                        PUNISHMENTS_TABLE))
+                        punishmentTable))
         ) {
             statement.setString(1, punishment.getPlayer().toLowerCase());
             statement.setString(2, plugin.getGson().toJson(punishment));
@@ -38,7 +40,7 @@ public class DatabaseManager extends com.github.aldevteam.core.storage.sql.Datab
     public List<Punishment> getPunishments(String player) {
         final List<Punishment> punishments = new ArrayList<>();
 
-        try (final PreparedStatement statement = getSql().getConnection().prepareStatement(String.format("SELECT * FROM %s WHERE player LIKE ?", PUNISHMENTS_TABLE))) {
+        try (final PreparedStatement statement = getSql().getConnection().prepareStatement(String.format("SELECT * FROM %s WHERE player LIKE ?", punishmentTable))) {
 
             statement.setString(1, player.toLowerCase());
 
@@ -58,7 +60,7 @@ public class DatabaseManager extends com.github.aldevteam.core.storage.sql.Datab
     }
 
     public void updatePunishment(Punishment punishment) {
-        try (final PreparedStatement statement = getSql().getConnection().prepareStatement(String.format("UPDATE %s SET json = ? WHERE id = ?", PUNISHMENTS_TABLE))) {
+        try (final PreparedStatement statement = getSql().getConnection().prepareStatement(String.format("UPDATE %s SET json = ? WHERE id = ?", punishmentTable))) {
             statement.setString(1, plugin.getGson().toJson(punishment));
             statement.setInt(2, punishment.getId());
 
@@ -71,7 +73,7 @@ public class DatabaseManager extends com.github.aldevteam.core.storage.sql.Datab
     public void deletePunishment(String player) {
         try (final PreparedStatement statement = plugin.getDatabaseManager().getSql()
                 .prepareStatement(String.format("DELETE FROM %s WHERE id = ?",
-                        PUNISHMENTS_TABLE))
+                        punishmentTable))
         ) {
             statement.setString(1, player.toLowerCase());
             statement.execute();
@@ -92,7 +94,7 @@ public class DatabaseManager extends com.github.aldevteam.core.storage.sql.Datab
 
     public void initTables() {
         try {
-            getSql().createTable(PUNISHMENTS_TABLE, "id INT PRIMARY KEY AUTO_INCREMENT, player VARCHAR(16) NOT NULL, json JSON NOT NULL, INDEX(player)");
+            getSql().createTable(punishmentTable, "id INT PRIMARY KEY AUTO_INCREMENT, player VARCHAR(16) NOT NULL, json JSON NOT NULL, INDEX(player)");
         } catch (SQLException e) {
             e.printStackTrace();
         }

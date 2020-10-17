@@ -3,6 +3,7 @@ mysql:
   database: "minecraft_plugins"
   user: "root"
   password: ""
+  table: "legion_punishments"
 
 messages:
   kick-player-message:
